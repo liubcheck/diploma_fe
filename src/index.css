@@ -1,13 +1,195 @@
 body {
+  background-color: #f5f5f5;
   margin: 0;
-  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
-    'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue',
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "Roboto", "Oxygen",
+    "Ubuntu", "Cantarell", "Fira Sans", "Droid Sans", "Helvetica Neue",
     sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
 }
 
 code {
-  font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
+  font-family: source-code-pro, Menlo, Monaco, Consolas, "Courier New",
     monospace;
 }
+
+a {
+  color: revert;
+}
+
+.form-control {
+  border-radius: revert;
+  border-style: solid;
+  border-width: 2px;
+  border-color: black;
+}
+
+main {
+  margin: 50px 100px 0px 100px;
+}
+
+h1 {
+  font-size: 72px;
+  font-weight: 300;
+}
+
+.login-section {
+  display: flex;
+  justify-content: center;
+}
+
+.login-error-message {
+  color: red;
+      display: flex;
+      align-items: left;
+}
+
+.form-signin {
+  width: 100%;
+  max-width: 500px;
+  margin: 0px auto;
+}
+
+.login-label {
+  text-align: left;
+}
+
+.signin-container {
+  padding: 30px 60px 30px 60px;
+  border-style: dashed;
+  justify-content: center;
+  margin-top: 200px;
+}
+
+.login-btn {
+  margin: 0;
+}
+
+.form-group {
+  padding: 10px 0px 10px 0px;
+}
+
+.home-section {
+  text-align: center;
+  margin-top: 200px;
+  justify-content: center;
+}
+
+.home-section > div {
+  padding: 25px 0px 25px 0px;
+}
+
+.table-header {
+  background-color: darkgrey;
+}
+
+.evenRow {
+  background-color: lightgrey;
+}
+
+.oddRow {
+  background-color: inherit;
+}
+
+.users-table {
+  width: 100%;
+}
+
+table {
+  border: black;
+  border-style: solid;
+}
+
+th, td {
+  border: solid;
+  padding: 5px;
+}
+
+td {
+  border-bottom-style: none;
+  border-top-style: none;
+}
+
+.modal-content {
+  border-radius: unset;
+  border-width: 3px;
+  border-color: black;
+  width: 50%;
+}
+
+.modal {
+  --bs-modal-header-padding: 0.3rem;
+  --bs-modal-header-border-width: 3px;
+  --bs-modal-header-border-color: black;
+
+}
+
+.modal-dialog {
+  justify-content: center;
+}
+
+.modal-inner-container {
+  text-align: center;
+  padding: 30px 0px 30px 0px;
+}
+
+.home-btn {
+  margin: 7px;
+}
+
+.create-container {
+  padding: 15px 0px 15px 0px;
+}
+
+.link-disabled {
+  opacity: 0.5px;
+  text-decoration: none;
+  pointer-events: none;
+}
+
+.navbar {
+  padding: 0 15 0 15;
+  height: 50;
+}
+
+.form-group {
+    padding: 5 0 5 0;
+}
+
+.btn {
+    margin: 0 0 0 0;
+}
+
+.form-container {
+    margin-top: 25px;
+}
+
+.required:after {
+    content: " *";
+    color: red;
+}
+
+.error-message {
+    color: red;
+    margin-left: 0px;
+    display: inline;
+}
+
+.form-control {
+    display: inline;
+    width: 100%;
+}
+
+select.form-control {
+    -webkit-appearance: menulist;
+    appearance: revert;
+}
+
+.errors-container {
+    display: inline-grid;
+}
+
+.button-container {
+    padding: 15 0 15 0;
+}
+
