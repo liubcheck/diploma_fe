@@ -5,6 +5,7 @@ import variantReducer from './slices/variantSlice';
 import taskReducer from './slices/taskSlice';
 import lessonReducer from './slices/lessonSlice';
 import formReducer from './slices/formSlice';
+import progressReducer from './slices/progressSlice';
 
 export const store = configureStore({
   reducer: {
@@ -14,6 +15,7 @@ export const store = configureStore({
     tasks: taskReducer,
     lessons: lessonReducer,
     form: formReducer,
+    progress: progressReducer,
   },
 });
 

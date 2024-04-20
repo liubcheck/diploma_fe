@@ -44,7 +44,6 @@ const CreateLessonPage: React.FC = () => {
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    console.log(lesson);
     dispatch(createLesson(lesson));
     navigate('/');
   };

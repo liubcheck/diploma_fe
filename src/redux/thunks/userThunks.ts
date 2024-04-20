@@ -15,7 +15,7 @@ export const loginUser = createAsyncThunk(
     );
     axios.defaults.headers.common['Authorization'] =
       `Bearer ${response.data.token}`;
-    cookie.set('token', response.data.token);
+    cookie.set('token', response.data.token, {expires: 1});
     return response.data;
   }
 );

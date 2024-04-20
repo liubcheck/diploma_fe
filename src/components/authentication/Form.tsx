@@ -31,7 +31,6 @@ const Form = ({onSubmit, handleCancel}: Props) => {
   const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     if (!validateForm(formErrors)) return;
-    console.log(formData);
     onSubmit(formData);
   };
 

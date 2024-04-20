@@ -9,7 +9,7 @@ import {
 } from '../thunks/taskThunks';
 
 export interface Task {
-  id?: number;
+  id: number;
   question: string;
   taskType: string;
   variants?: Variant[];
