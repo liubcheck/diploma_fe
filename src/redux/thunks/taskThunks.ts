@@ -15,6 +15,15 @@ export const fetchTaskById = createAsyncThunk<Task, number>(
   }
 );
 
+export const fetchTasksByLessonId = createAsyncThunk(
+  'tasks/fetchByLessonId',
+  async (lessonId: number) => {
+    const response = await fetch(`/api/tasks/lesson/${lessonId}`);
+    const data = await response.json();
+    return data;
+  }
+);
+
 export const createTask = createAsyncThunk('tasks/create', async () => {
   const response = await axios.post('/api/tasks');
   return response.data;

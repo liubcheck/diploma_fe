@@ -18,16 +18,22 @@ export interface Lesson {
 
 export interface LessonState {
   lessons: Lesson[];
+  currentLesson: Lesson | null;
 }
 
 const initialState: LessonState = {
   lessons: [],
+  currentLesson: null,
 };
 
 const LessonSlice = createSlice({
   name: 'tasks',
   initialState,
-  reducers: {},
+  reducers: {
+    setCurrentLesson(state, action) {
+      state.currentLesson = action.payload;
+    },
+  },
   extraReducers: builder => {
     builder.addCase(fetchLessons.fulfilled, (state, action) => {
       state.lessons = action.payload;
@@ -56,5 +62,7 @@ const LessonSlice = createSlice({
     );
   },
 });
+
+export const {setCurrentLesson} = LessonSlice.actions;
 
 export default LessonSlice.reducer;

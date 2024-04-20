@@ -1,6 +1,7 @@
 import {createAsyncThunk} from '@reduxjs/toolkit';
 import axios from 'axios';
 import {User} from '../slices/userSlice';
+import cookie from 'js-cookie';
 
 axios.defaults.headers.common['Content-Type'] = 'application/json';
 
@@ -9,17 +10,18 @@ export const loginUser = createAsyncThunk(
   async ({loginData, password}: {loginData: string; password: string}) => {
     const response = await axios.post(
       '/api/users/login',
-      JSON.stringify({loginData, password})
+      JSON.stringify({loginData, password}),
+      {headers: {'Content-Type': 'application/json'}}
     );
     axios.defaults.headers.common['Authorization'] =
       `Bearer ${response.data.token}`;
-    localStorage.setItem('token', response.data.token);
+    cookie.set('token', response.data.token);
     return response.data;
   }
 );
 
 export const logoutUser = createAsyncThunk('users/logout', async () => {
-  localStorage.clear();
+  cookie.remove('token');
   delete axios.defaults.headers.common['Authorization'];
 });
 

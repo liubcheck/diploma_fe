@@ -4,6 +4,7 @@ import {
   createTask,
   deleteTask,
   fetchTasks,
+  fetchTasksByLessonId,
   updateTask,
 } from '../thunks/taskThunks';
 
@@ -29,6 +30,9 @@ const TaskSlice = createSlice({
   reducers: {},
   extraReducers: builder => {
     builder.addCase(fetchTasks.fulfilled, (state, action) => {
+      state.tasks = action.payload;
+    });
+    builder.addCase(fetchTasksByLessonId.fulfilled, (state, action) => {
       state.tasks = action.payload;
     });
     builder.addCase(createTask.fulfilled, (state, action) => {

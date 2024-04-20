@@ -1,23 +1,31 @@
 import React from 'react';
-import {NavLink} from 'react-router-dom';
-import {useAuth} from './authentication/AuthProvider';
+import {useDispatch} from 'react-redux';
+import {AppDispatch} from '../redux/store';
+import {useNavigate} from 'react-router-dom';
+import {logoutUser} from '../redux/thunks/userThunks';
 
 interface Props {
-  handleLogout: () => void;
+  username: string;
 }
 
-const Navbar = ({handleLogout}: Props) => {
-  const authData = useAuth();
+const Navbar = ({username}: Props) => {
+  const dispatch = useDispatch<AppDispatch>();
+  const navigate = useNavigate();
+
+  const handleLogout = async () => {
+    await dispatch(logoutUser());
+    navigate('/login');
+  };
 
   return (
     <nav className="navbar fixed-top">
       <div className="container-fluid flex-row-reverse">
         <span>
-          {authData.user?.username}
+          {username}
           {' ('}
-          <NavLink to="/login" onClick={handleLogout} className="logout-link">
+          <a href="" onClick={handleLogout} className="logout-link">
             Logout
-          </NavLink>
+          </a>
           {')'}
         </span>
       </div>

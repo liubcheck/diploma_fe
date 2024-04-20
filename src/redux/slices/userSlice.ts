@@ -1,6 +1,7 @@
 import {createSlice} from '@reduxjs/toolkit';
 import {Role} from './roleSlice';
-import {fetchCurrentUser, registerUser} from '../thunks/userThunks';
+import {fetchCurrentUser, loginUser, registerUser} from '../thunks/userThunks';
+import cookie from 'js-cookie';
 
 export interface User {
   id: number;
@@ -11,25 +12,22 @@ export interface User {
 
 export interface UserState {
   loggedInUser: User | null;
+  token: string | null | undefined;
   users: User[];
-  userForUpdate: User | null;
 }
 
 const initialState: UserState = {
   loggedInUser: null,
+  token: null,
   users: [],
-  userForUpdate: null,
 };
 
 const UserSlice = createSlice({
   name: 'users',
   initialState,
   reducers: {
-    clearLoggedInUser(state) {
+    logout(state) {
       state.loggedInUser = null;
-    },
-    setUserForUpdate(state, action) {
-      state.userForUpdate = action.payload;
     },
   },
   extraReducers: builder => {
@@ -37,12 +35,17 @@ const UserSlice = createSlice({
       .addCase(registerUser.fulfilled, (state, action) => {
         state.users.push(action.payload);
       })
+      .addCase(loginUser.fulfilled, (state, action) => {
+        state.loggedInUser = action.payload.user;
+        state.token = action.payload.token;
+      })
       .addCase(fetchCurrentUser.fulfilled, (state, action) => {
         state.loggedInUser = action.payload;
+        state.token = cookie.get('token');
       });
   },
 });
 
-export const {clearLoggedInUser, setUserForUpdate} = UserSlice.actions;
+export const {logout} = UserSlice.actions;
 
 export default UserSlice.reducer;

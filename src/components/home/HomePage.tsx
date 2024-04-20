@@ -1,24 +1,21 @@
 import React from 'react';
 import Button from './HomeButton';
-import {useAuth} from '../authentication/AuthProvider';
-import {useNavigate} from 'react-router-dom';
 import Navbar from '../Navbar';
+import {useSelector} from 'react-redux';
+import {getLoggedInUser} from '../../redux/selectors/userSelector';
 
 const HomePage = () => {
-  const {user, logout} = useAuth();
-  const navigate = useNavigate();
-
-  const handleLogout = async () => {
-    logout();
-    navigate('/login');
-  };
+  const user = useSelector(getLoggedInUser);
 
   return (
     <React.Fragment>
       <section className="home-section text-center">
-        <Navbar handleLogout={handleLogout} />
+        <Navbar username={user!.username} />
         {user?.role?.name === 'ADMIN' ? (
-          <Button label="Create Lesson" link="/createLesson" />
+          <React.Fragment>
+            <Button label="Create Lesson" link="/createLesson" />
+            <Button label="Show Lessons" link="/grades" />
+          </React.Fragment>
         ) : (
           <Button label="Practice" link="/grades" />
         )}

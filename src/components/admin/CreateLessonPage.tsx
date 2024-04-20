@@ -1,19 +1,22 @@
 import React, {useEffect, useState} from 'react';
 import {useNavigate} from 'react-router-dom';
 import {Lesson} from '../../redux/slices/lessonSlice';
-import {useDispatch} from 'react-redux';
+import {useDispatch, useSelector} from 'react-redux';
 import {AppDispatch} from '../../redux/store';
 import {createLesson} from '../../redux/thunks/lessonThunks';
 import {Task} from '../../redux/slices/taskSlice';
 import {Variant} from '../../redux/slices/variantSlice';
+import {getLoggedInUser} from '../../redux/selectors/userSelector';
+import Navbar from '../Navbar';
 
 const subjects = ['Math', 'Science', 'Literature'];
 const grades = Array.from({length: 11}, (_, i) => i + 1);
 
 const CreateLessonPage: React.FC = () => {
+  const user = useSelector(getLoggedInUser);
   const [lesson, setLesson] = useState<Lesson>({
     id: 0,
-    subject: '',
+    subject: 'Math',
     grade: 1,
     title: '',
     tasks: [],
@@ -41,50 +44,58 @@ const CreateLessonPage: React.FC = () => {
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
+    console.log(lesson);
     dispatch(createLesson(lesson));
     navigate('/');
   };
 
   return (
-    <form onSubmit={handleSubmit}>
-      <select
-        value={lesson.subject}
-        onChange={e => setLesson({...lesson, subject: e.target.value})}
-      >
-        {subjects.map(subject => (
-          <option key={subject} value={subject}>
-            {subject}
-          </option>
-        ))}
-      </select>
-      <select
-        value={lesson.grade}
-        onChange={e => setLesson({...lesson, grade: Number(e.target.value)})}
-      >
-        {grades.map(grade => (
-          <option key={grade} value={grade}>
-            {grade}
-          </option>
-        ))}
-      </select>
-      <input
-        type="text"
-        value={lesson.title}
-        onChange={e => setLesson({...lesson, title: e.target.value})}
-        placeholder="Lesson title"
-      />
-      {lesson.tasks.map((task, index) => (
-        <TaskForm
-          key={index}
-          task={task}
-          updateTask={updatedTask => updateTask(index, updatedTask)}
-        />
-      ))}
-      <button type="button" onClick={addTask}>
-        Add Task
-      </button>
-      <button type="submit">Create Lesson</button>
-    </form>
+    <React.Fragment>
+      <Navbar username={user!.username} />
+      <div>
+        <form onSubmit={handleSubmit}>
+          <select
+            value={lesson.subject}
+            onChange={e => setLesson({...lesson, subject: e.target.value})}
+          >
+            {subjects.map(subject => (
+              <option key={subject} value={subject}>
+                {subject}
+              </option>
+            ))}
+          </select>
+          <select
+            value={lesson.grade}
+            onChange={e =>
+              setLesson({...lesson, grade: Number(e.target.value)})
+            }
+          >
+            {grades.map(grade => (
+              <option key={grade} value={grade}>
+                {grade}
+              </option>
+            ))}
+          </select>
+          <input
+            type="text"
+            value={lesson.title}
+            onChange={e => setLesson({...lesson, title: e.target.value})}
+            placeholder="Lesson title"
+          />
+          {lesson.tasks.map((task, index) => (
+            <TaskForm
+              key={index}
+              task={task}
+              updateTask={updatedTask => updateTask(index, updatedTask)}
+            />
+          ))}
+          <button type="button" onClick={addTask}>
+            Add Task
+          </button>
+          <button type="submit">Create Lesson</button>
+        </form>
+      </div>
+    </React.Fragment>
   );
 };
 
