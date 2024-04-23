@@ -5,6 +5,7 @@ import {useNavigate} from 'react-router-dom';
 import {useDispatch} from 'react-redux';
 import {AppDispatch} from '../../redux/store';
 import {loginUser} from '../../redux/thunks/userThunks';
+import {fetchTopTenUsersByScore} from '../../redux/thunks/progressThunks';
 
 const LoginPage = () => {
   const [loginData, setLoginData] = useState<string>('');
@@ -16,7 +17,9 @@ const LoginPage = () => {
   const handleLogin = async (e: {preventDefault: () => void}) => {
     e.preventDefault();
     try {
-      await dispatch(loginUser({loginData, password}));
+      await dispatch(loginUser({loginData, password})).then(async () => {
+        await dispatch(fetchTopTenUsersByScore());
+      });
       navigate('/');
     } catch (error) {
       console.error('Error:', error);

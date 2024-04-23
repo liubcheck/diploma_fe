@@ -15,13 +15,13 @@ export const loginUser = createAsyncThunk(
     );
     axios.defaults.headers.common['Authorization'] =
       `Bearer ${response.data.token}`;
-    cookie.set('token', response.data.token, {expires: 1});
+    cookie.set('access_token', response.data.token, {expires: 1});
     return response.data;
   }
 );
 
 export const logoutUser = createAsyncThunk('users/logout', async () => {
-  cookie.remove('token');
+  cookie.remove('access_token');
   delete axios.defaults.headers.common['Authorization'];
 });
 

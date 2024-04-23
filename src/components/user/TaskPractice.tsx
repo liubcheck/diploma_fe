@@ -70,7 +70,11 @@ const TaskPractice: React.FC<TaskPracticeProps> = ({lesson, onComplete}) => {
                   margin: '5px',
                   backgroundColor:
                     selectedVariant[currentTask.id] === variant.value
-                      ? 'darkblue'
+                      ? 'black'
+                      : '',
+                  color:
+                    selectedVariant[currentTask.id] === variant.value
+                      ? 'white'
                       : '',
                 }}
               >

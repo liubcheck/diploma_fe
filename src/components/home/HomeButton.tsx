@@ -3,17 +3,19 @@ import {useNavigate} from 'react-router-dom';
 
 interface Props {
   label: string;
-  link: string;
+  link?: string;
+  onClick?: () => void;
 }
 
-const HomeButton = ({label, link}: Props) => {
+const HomeButton = ({label, link, onClick}: Props) => {
   const navigate = useNavigate();
 
   return (
     <div>
       <button
-        onClick={() => navigate(link)}
+        onClick={link ? () => navigate(link) : onClick}
         className="btn login-btn btn-outline-dark"
+        style={{margin: '5px'}}
       >
         {label}
       </button>

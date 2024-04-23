@@ -8,6 +8,7 @@ import {BrowserRouter} from 'react-router-dom';
 import cookie from 'js-cookie';
 import axios from 'axios';
 import {fetchCurrentUser} from './redux/thunks/userThunks';
+import LoadingPage from './components/LoadingPage';
 
 const root = ReactDOM.createRoot(
   document.getElementById('root') as HTMLElement
@@ -18,7 +19,7 @@ const Index = () => {
 
   useEffect(() => {
     const init = async () => {
-      const token = cookie.get('token');
+      const token = cookie.get('access_token');
       if (token) {
         axios.defaults.headers.common['Authorization'] = `Bearer ${token}`;
         await store.dispatch(fetchCurrentUser());
@@ -30,7 +31,7 @@ const Index = () => {
   }, []);
 
   if (!initialLoadComplete) {
-    return <div>Loading...</div>;
+    return <LoadingPage />;
   }
 
   return (

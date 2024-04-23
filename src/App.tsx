@@ -13,6 +13,7 @@ import LessonsPage from './components/admin/LessonsPage';
 import RegisterPage from './components/authentication/RegisterPage';
 import PracticePage from './components/user/PracticePage';
 import Missing from './components/Missing';
+import StatsPage from './components/user/StatsPage';
 
 const App: React.FC = () => {
   return (
@@ -30,6 +31,7 @@ const App: React.FC = () => {
             path="/:grade/:subject/lessons/:lessonId/practice"
             element={<PracticePage />}
           />
+          <Route path="/stats" element={<StatsPage />} />
           <Route path="/createLesson" element={<CreateLessonPage />} />
           <Route path="/editLesson" element={<EditLessonPage />} />
         </Route>
