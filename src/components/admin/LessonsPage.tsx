@@ -20,10 +20,10 @@ const LessonsPage: React.FC = () => {
   }, [dispatch, grade, subject]);
 
   return (
-    <section className="text-center">
-      <h1>
-        Lessons for {subject} Grade {grade}
-      </h1>
+    <section className="home-section text-center">
+      <h2>
+        Уроки з предмету "{subject}" для {grade} класу
+      </h2>
       <LessonsList lessons={lessons} />
     </section>
   );

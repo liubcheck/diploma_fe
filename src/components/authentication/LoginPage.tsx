@@ -40,6 +40,7 @@ const LoginPage = () => {
   return (
     <section className="login-section text-center">
       <div className="signin-container">
+        <h1 className="login-title">Diploma</h1>
         <LoginForm
           login={loginData}
           setLogin={setLoginData}

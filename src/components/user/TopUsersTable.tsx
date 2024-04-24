@@ -9,8 +9,8 @@ const TopUsersTable = ({topUsersData}: Props) => {
     <table className="mx-auto users-table">
       <thead>
         <tr className="table-header">
-          <th>Username</th>
-          <th>Score</th>
+          <th>Нікнейм</th>
+          <th>Рахунок</th>
         </tr>
       </thead>
       <tbody>

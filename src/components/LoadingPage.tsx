@@ -4,7 +4,7 @@ const LoadingPage = () => {
   return (
     <section className="login-section text-center">
       <div className="signin-container">
-        <h1>Loading...</h1>
+        <h1>Завантаження...</h1>
       </div>
     </section>
   );

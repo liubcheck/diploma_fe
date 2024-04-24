@@ -13,14 +13,14 @@ const HomePage = () => {
         <Navbar username={user!.username} />
         {user?.role?.name === 'ADMIN' ? (
           <div>
-            <Button label="Create Lesson" link="/createLesson" />
-            <Button label="Show Lessons" link="/grades" />
-            <Button label="Stats" link="/stats" />
+            <Button label="Створити урок" link="/createLesson" />
+            <Button label="Редагувати урок" link="/grades" />
+            <Button label="Статистика" link="/stats" />
           </div>
         ) : (
           <div>
-            <Button label="Practice" link="/grades" />
-            <Button label="Stats" link="/stats" />
+            <Button label="Повчитися" link="/grades" />
+            <Button label="Статистика" link="/stats" />
           </div>
         )}
       </section>

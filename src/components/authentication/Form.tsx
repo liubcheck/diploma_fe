@@ -37,7 +37,7 @@ const Form = ({onSubmit, handleCancel}: Props) => {
   return (
     <form onSubmit={handleSubmit} autoComplete="off">
       <FormGroup
-        label="Username"
+        label="Нікнейм"
         name="username"
         type="text"
         value={formData.username}
@@ -45,7 +45,7 @@ const Form = ({onSubmit, handleCancel}: Props) => {
         error={formErrors.username}
       />
       <FormGroup
-        label="Email"
+        label="Пошта"
         name="email"
         type="text"
         value={formData.email}
@@ -53,7 +53,7 @@ const Form = ({onSubmit, handleCancel}: Props) => {
         error={formErrors.email}
       />
       <FormGroup
-        label="Password"
+        label="Пароль"
         name="password"
         type="password"
         value={formData.password}
@@ -61,7 +61,7 @@ const Form = ({onSubmit, handleCancel}: Props) => {
         error={formErrors.password}
       />
       <FormGroup
-        label="Password again"
+        label="Повтори пароль"
         name="repeatPassword"
         type="password"
         value={formData.repeatPassword}
@@ -69,14 +69,14 @@ const Form = ({onSubmit, handleCancel}: Props) => {
         error={formErrors.repeatPassword}
       />
       <button type="submit" className="btn btn-outline-dark me-2">
-        Ok
+        Зареєструватися
       </button>
       <button
         type="button"
         onClick={handleCancel}
         className="btn btn-outline-dark"
       >
-        Cancel
+        Назад
       </button>
     </form>
   );

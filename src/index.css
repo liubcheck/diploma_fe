@@ -8,13 +8,13 @@ body {
   -moz-osx-font-smoothing: grayscale;
 }
 
-code {
-  font-family: source-code-pro, Menlo, Monaco, Consolas, "Courier New",
-    monospace;
-}
-
-a {
-  color: revert;
+main {
+  display: flex; /* This creates a flex container for the main content */
+  justify-content: space-between; /* This spaces out the stats and top users */
+  margin: 50px; /* Adjust margin as necessary */
+  max-width: 1200px; /* Adjust maximum width as necessary */
+  margin-left: auto;
+  margin-right: auto;
 }
 
 .form-control {
@@ -24,13 +24,45 @@ a {
   border-color: black;
 }
 
-main {
-  margin: 50px 100px 0px 100px;
+.container {
+  display: flex;
+  flex-direction: column; /* Stacks the title and content vertically */
+  width: 48%; /* Adjust width as necessary */
+}
+
+.stats-title, .top-users-title {
+  font-size: 36px;
+  font-weight: bold;
+  margin-bottom: 20px;
+}
+
+.stats-column, .top-users-column {
+  background: #ffffff;
+  box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+  border-radius: 4px;
+  padding: 20px;
 }
 
 h1 {
   font-size: 72px;
   font-weight: 300;
+}
+
+h3 {
+  font-weight: 300;
+}
+
+li {
+  font-size: 20px;
+  font-weight: 300;
+  margin-bottom: 10px;
+}
+
+.login-title {
+  font-size: 48px; /* Or any size you prefer */
+  font-weight: bold;
+  font-style: italic; /* This will make it cursive */
+  margin-bottom: 30px; /* Gives some space between the title and the form */
 }
 
 .login-section {
@@ -148,8 +180,14 @@ td {
 }
 
 .navbar {
-  padding: 0 15 0 15;
-  height: 50;
+  height: 60px; /* Adjust as necessary */
+  width: 100%;
+  /* Other styles... */
+}
+
+.main-content {
+  padding-top: 70px; /* More than the height of the navbar to ensure space */
+  /* Other styles... */
 }
 
 .form-group {
@@ -191,4 +229,20 @@ select.form-control {
 
 .button-container {
     padding: 15 0 15 0;
+}
+
+/* Titles Flex Container */
+.titles-flex-container {
+  display: flex;
+  justify-content: space-between; /* Positions the titles at the start and end */
+  margin-bottom: 20px; /* Adds some space between the titles and the content below */
+}
+
+/* Flex container should now only be used for the inner content and not titles */
+.stats-flex-container {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  gap: 20px;
+  /* Remove align-items if it's there */
 }

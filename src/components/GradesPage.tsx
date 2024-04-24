@@ -13,7 +13,7 @@ const GradesPage = () => {
     <React.Fragment>
       <Navbar username={user!.username} />
       <section className="text-center">
-        <h1>Select a Grade</h1>
+        <h1>Обери клас</h1>
         {grades.map(grade => (
           <div key={grade}>
             <GradeButton grade={grade} />

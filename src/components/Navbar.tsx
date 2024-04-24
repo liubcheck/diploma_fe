@@ -24,7 +24,7 @@ const Navbar = ({username}: Props) => {
           {username}
           {' ('}
           <a href="" onClick={handleLogout} className="logout-link">
-            Logout
+            Вийти
           </a>
           {')'}
         </span>

@@ -36,13 +36,13 @@ const PracticePage: React.FC = () => {
       <section className="home-section text-center">
         {completed ? (
           <div>
-            <h1>{`Lesson ${
+            <h1>{`Урок ${
               passed
-                ? 'Completed!'
-                : 'Failed! There must be no less than 80% of right answers!'
-            } Your score: ${lessonScore}/${lesson?.tasks.length}`}</h1>
-            <Button label="Start Again" onClick={resetPractice} />
-            <Button label="Go Home Page" link="/" />
+                ? 'пройдений!'
+                : 'не пройдений! Має бути не менше 80% правильних відповідей!'
+            } Результат: ${lessonScore}/${lesson?.tasks.length}`}</h1>
+            <Button label="Заново" onClick={resetPractice} />
+            <Button label="На головну" link="/" />
           </div>
         ) : (
           lesson && <TaskPractice lesson={lesson} onComplete={handleComplete} />

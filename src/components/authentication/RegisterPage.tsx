@@ -28,7 +28,7 @@ const RegisterPage = () => {
   return (
     <main>
       <div className="container">
-        <h1>Register user</h1>
+        <h1>Зареєструватися</h1>
         <Form onSubmit={handleRegister} handleCancel={handleCancel} />
       </div>
     </main>

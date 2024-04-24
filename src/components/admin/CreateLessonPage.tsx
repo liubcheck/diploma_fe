@@ -9,7 +9,7 @@ import {Variant} from '../../redux/slices/variantSlice';
 import {getLoggedInUser} from '../../redux/selectors/userSelector';
 import Navbar from '../Navbar';
 
-const subjects = ['Math', 'Science', 'Literature'];
+const subjects = ['Математика', 'Українська мова', 'Англійська мова'];
 const grades = Array.from({length: 11}, (_, i) => i + 1);
 
 const CreateLessonPage: React.FC = () => {
@@ -51,7 +51,7 @@ const CreateLessonPage: React.FC = () => {
   return (
     <React.Fragment>
       <Navbar username={user!.username} />
-      <div>
+      <div className="main-content">
         <form onSubmit={handleSubmit}>
           <select
             value={lesson.subject}
@@ -79,7 +79,7 @@ const CreateLessonPage: React.FC = () => {
             type="text"
             value={lesson.title}
             onChange={e => setLesson({...lesson, title: e.target.value})}
-            placeholder="Lesson title"
+            placeholder="Назва теми"
           />
           {lesson.tasks.map((task, index) => (
             <TaskForm
@@ -89,9 +89,9 @@ const CreateLessonPage: React.FC = () => {
             />
           ))}
           <button type="button" onClick={addTask}>
-            Add Task
+            Додати питання
           </button>
-          <button type="submit">Create Lesson</button>
+          <button type="submit">Створити урок</button>
         </form>
       </div>
     </React.Fragment>
@@ -158,11 +158,11 @@ const TaskForm: React.FC<TaskFormProps> = ({task, updateTask}) => {
         type="text"
         value={task.question}
         onChange={handleQuestionChange}
-        placeholder="Question"
+        placeholder="Питання"
       />
       <select value={task.taskType} onChange={handleTaskTypeChange}>
-        <option value="SINGLE_ANSWER">With Variants</option>
-        <option value="OPEN_ANSWER">Text Answer</option>
+        <option value="SINGLE_ANSWER">З варіантами</option>
+        <option value="OPEN_ANSWER">Текстова відповідь</option>
       </select>
       {task.taskType === 'SINGLE_ANSWER' &&
         task.variants?.map((variant, index) => (
@@ -173,7 +173,7 @@ const TaskForm: React.FC<TaskFormProps> = ({task, updateTask}) => {
               onChange={e =>
                 handleVariantChange(index, {value: e.target.value})
               }
-              placeholder="Variant"
+              placeholder="Варіант"
             />
             <input
               type="checkbox"
@@ -189,7 +189,7 @@ const TaskForm: React.FC<TaskFormProps> = ({task, updateTask}) => {
           type="text"
           value={task.rightAnswer || ''}
           onChange={e => updateTask({...task, rightAnswer: e.target.value})}
-          placeholder="Right Answer"
+          placeholder="Правильна відповідь"
         />
       )}
     </div>

@@ -14,7 +14,7 @@ const SignInSection = ({error}: Props) => {
       )}
       <div className="ms-auto">
         <button className="btn login-btn btn-outline-dark" type="submit">
-          Sign in
+          Увійти
         </button>
       </div>
     </div>

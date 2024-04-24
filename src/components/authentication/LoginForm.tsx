@@ -22,7 +22,7 @@ const LoginForm = ({
   return (
     <form onSubmit={onSubmit} className="form-signin position-relative">
       <TextInput
-        label="Login"
+        label="Нікнейм або пошта"
         type="text"
         name="login"
         value={login}
@@ -30,7 +30,7 @@ const LoginForm = ({
         autoFocus
       />
       <TextInput
-        label="Password"
+        label="Пароль"
         type="password"
         name="password"
         value={password}

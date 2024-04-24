@@ -5,7 +5,7 @@ const RegisterOption = () => {
   return (
     <div className="d-flex mt-2 justify-content-center">
       <span>
-        Don't have an account? <NavLink to="/register">Register</NavLink>
+        Нема акаунту? <NavLink to="/register">Зареєструйся!</NavLink>
       </span>
     </div>
   );

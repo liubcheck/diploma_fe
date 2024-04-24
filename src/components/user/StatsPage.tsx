@@ -21,9 +21,12 @@ import {
 import TopUsersTable from './TopUsersTable';
 import {AppDispatch} from '../../redux/store';
 import LoadingPage from '../LoadingPage';
+import {getLoggedInUser} from '../../redux/selectors/userSelector';
+import {translateDay} from '../utils/dayTranslation';
+import Navbar from '../Navbar';
 
 const StatsPage = () => {
-  const dispatch = useDispatch<AppDispatch>();
+  const user = useSelector(getLoggedInUser);
   const totalScore = useSelector(getUserTotalScore);
   const averageScore = useSelector(getUserAverageScore);
   const bestScore = useSelector(getBestScore);
@@ -32,19 +35,24 @@ const StatsPage = () => {
   const topUsersData = useSelector(getTopTenUsersByScore);
   const testCountsByDay = useSelector(getTestCountsByDay);
   const [loading, setLoading] = useState<boolean>(true);
+  const dispatch = useDispatch<AppDispatch>();
 
   useEffect(() => {
-    Promise.all([
-      dispatch(fetchUserTotalScore()),
-      dispatch(fetchUserAverageScore()),
-      dispatch(fetchBestScore()),
-      dispatch(fetchWorstScore()),
-      dispatch(fetchAverageLessonAttemptsNumber()),
-      dispatch(fetchTopTenUsersByScore()),
-      dispatch(fetchTestCountsByDay()),
-    ]).then(() => {
-      setLoading(false);
-    });
+    if (user && user.role.name === 'USER') {
+      Promise.all([
+        dispatch(fetchUserTotalScore()),
+        dispatch(fetchUserAverageScore()),
+        dispatch(fetchBestScore()),
+        dispatch(fetchWorstScore()),
+        dispatch(fetchAverageLessonAttemptsNumber()),
+        dispatch(fetchTopTenUsersByScore()),
+        dispatch(fetchTestCountsByDay()),
+      ]).then(() => {
+        setLoading(false);
+      });
+    } else if (user) {
+      dispatch(fetchTopTenUsersByScore()).then(() => setLoading(false));
+    }
   }, [dispatch]);
 
   if (loading) {
@@ -54,22 +62,34 @@ const StatsPage = () => {
   return (
     <main>
       <div className="container">
-        <h1>Stats Overview</h1>
-        <div>
-          <h2>Total Score: {totalScore}</h2>
-          <h2>Average Score: {averageScore.toFixed(2)}</h2>
-          <h2>Best Score: {bestScore}</h2>
-          <h2>Worst Score: {worstScore}</h2>
-          <h2>Average Attempts per Lesson: {averageAttempts.toFixed(2)}</h2>
-          <h2>Daily Test Counts:</h2>
-          <ul>
-            {Object.entries(testCountsByDay).map(([day, count]) => (
-              <li key={day}>{`${day}: ${count}`}</li>
-            ))}
-          </ul>
+        <Navbar username={user!.username} />
+        {user && user.role.name === 'USER' && (
+          <>
+            <div className="stats-title">Твоя Статистика</div>
+            <div className="stats-column">
+              <h3>* Загальний рахунок: {totalScore}</h3>
+              <h3>* Середній рахунок: {averageScore.toFixed(2)}</h3>
+              <h3>* Найкращий результат: {bestScore}</h3>
+              <h3>* Найгірший результат: {worstScore}</h3>
+              <h3>
+                * Середня кількість спроб на 1 урок:{' '}
+                {averageAttempts.toFixed(2)}
+              </h3>
+              <h3>* Кількість проходжень уроків за останній тиждень:</h3>
+              <ul>
+                {Object.entries(testCountsByDay).map(([day, count]) => (
+                  <li key={day}>{`${translateDay(day)}: ${count}`}</li>
+                ))}
+              </ul>
+            </div>
+          </>
+        )}
+      </div>
+      <div className="container">
+        <div className="top-users-title">Топ 10 Учнів</div>
+        <div className="top-users-column">
+          <TopUsersTable topUsersData={topUsersData} />
         </div>
-        <h1>Top 10 Users</h1>
-        <TopUsersTable topUsersData={topUsersData} />
       </div>
     </main>
   );
