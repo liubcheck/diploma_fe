@@ -16,10 +16,10 @@ const GradeButton = ({grade}: Props) => {
     <button
       key={grade}
       onClick={() => handleGradeClick(grade)}
-      className="btn login-btn btn-outline-dark"
+      className="btn grade-btn btn-outline-dark"
       style={{margin: '5px'}}
     >
-      {`${grade} клас`}
+      {`${grade}`}
     </button>
   );
 };

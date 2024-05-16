@@ -37,6 +37,7 @@ const TaskPractice: React.FC<TaskPracticeProps> = ({lesson, onComplete}) => {
   };
 
   const goToNextTask = () => {
+    setSelectedVariant({});
     if (currentTaskIndex < shuffledTasks.length - 1) {
       setCurrentTaskIndex(currentTaskIndex + 1);
     } else {
@@ -45,50 +46,65 @@ const TaskPractice: React.FC<TaskPracticeProps> = ({lesson, onComplete}) => {
   };
 
   const currentTask = shuffledTasks[currentTaskIndex];
+  if (!currentTask) {
+    console.error('No current task available at index', currentTaskIndex);
+    return <div>No task available</div>;
+  }
+  const isNextEnabled =
+    currentTask.taskType === 'OPEN_ANSWER'
+      ? userAnswers[currentTask.id]
+      : Object.keys(selectedVariant).length > 0;
+
   return (
     <div>
       {currentTask && (
         <div>
           <h1>{currentTask.question}</h1>
-          {currentTask.taskType === 'OPEN_ANSWER' ? (
-            <input
-              type="text"
-              value={userAnswers[currentTask.id] || ''}
-              onChange={e => handleAnswer(currentTask.id, e.target.value)}
-            />
-          ) : (
-            currentTask.variants?.map(variant => (
-              <button
-                key={variant.id}
-                onClick={() => handleAnswer(currentTask.id, variant.value)}
-                className={`btn login-btn btn-outline-dark ${
-                  selectedVariant[currentTask.id] === variant.value
-                    ? 'selected'
-                    : ''
-                }`}
-                style={{
-                  margin: '5px',
-                  backgroundColor:
+          <div className="answer-container">
+            {currentTask.taskType === 'OPEN_ANSWER' ? (
+              <input
+                type="text"
+                className="main-form--title"
+                value={userAnswers[currentTask.id] || ''}
+                onChange={e => handleAnswer(currentTask.id, e.target.value)}
+              />
+            ) : (
+              currentTask.variants?.map(variant => (
+                <button
+                  key={variant.id}
+                  onClick={() => handleAnswer(currentTask.id, variant.value)}
+                  className={`btn login-btn btn-outline-dark ${
                     selectedVariant[currentTask.id] === variant.value
-                      ? 'black'
-                      : '',
-                  color:
-                    selectedVariant[currentTask.id] === variant.value
-                      ? 'white'
-                      : '',
-                }}
-              >
-                {variant.value}
-              </button>
-            ))
-          )}
-          <button
-            onClick={goToNextTask}
-            className="btn login-btn btn-outline-dark"
-            style={{margin: '5px'}}
-          >
-            {currentTaskIndex === shuffledTasks.length - 1 ? 'Finish' : 'Next'}
-          </button>
+                      ? 'selected'
+                      : ''
+                  }`}
+                  style={{
+                    margin: '5px',
+                    backgroundColor:
+                      selectedVariant[currentTask.id] === variant.value
+                        ? 'green'
+                        : '',
+                    color:
+                      selectedVariant[currentTask.id] === variant.value
+                        ? 'white'
+                        : '',
+                  }}
+                >
+                  {variant.value}
+                </button>
+              ))
+            )}
+            <button
+              disabled={!isNextEnabled}
+              onClick={goToNextTask}
+              className="btn login-btn btn-outline-dark"
+              style={{margin: '5px'}}
+            >
+              {currentTaskIndex === shuffledTasks.length - 1
+                ? 'Finish'
+                : 'Next'}
+            </button>
+          </div>
         </div>
       )}
     </div>

@@ -16,7 +16,7 @@ const SubjectButton = ({subject}: Props) => {
   return (
     <button
       onClick={handleSubjectClick}
-      className="btn login-btn btn-outline-dark"
+      className="btn subject-btn btn-outline-dark"
     >
       {subject}
     </button>

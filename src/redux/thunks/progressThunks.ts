@@ -81,3 +81,15 @@ export const fetchTopTenUsersByScore = createAsyncThunk(
     return response.data;
   }
 );
+
+export const fetchAllUsersStats = createAsyncThunk(
+  'progress/fetchAllUsersStats',
+  async () => {
+    try {
+      const response = await axios.get('/api/progress/my-stats');
+      return response.data;
+    } catch (error) {
+      console.error('Error: ', error);
+    }
+  }
+);

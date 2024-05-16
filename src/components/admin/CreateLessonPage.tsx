@@ -1,15 +1,21 @@
-import React, {useEffect, useState} from 'react';
+import React, {useState} from 'react';
 import {useNavigate} from 'react-router-dom';
 import {Lesson} from '../../redux/slices/lessonSlice';
 import {useDispatch, useSelector} from 'react-redux';
 import {AppDispatch} from '../../redux/store';
 import {createLesson} from '../../redux/thunks/lessonThunks';
 import {Task} from '../../redux/slices/taskSlice';
-import {Variant} from '../../redux/slices/variantSlice';
 import {getLoggedInUser} from '../../redux/selectors/userSelector';
 import Navbar from '../Navbar';
+import TaskForm from './TaskForm';
 
-const subjects = ['Математика', 'Українська мова', 'Англійська мова'];
+const subjects = [
+  'Математика',
+  'Алгебра',
+  'Українська мова',
+  'Англійська мова',
+  'Географія',
+];
 const grades = Array.from({length: 11}, (_, i) => i + 1);
 
 const CreateLessonPage: React.FC = () => {
@@ -48,12 +54,18 @@ const CreateLessonPage: React.FC = () => {
     navigate('/');
   };
 
+  const returnBack = () => {
+    navigate('/');
+  };
+
   return (
     <React.Fragment>
       <Navbar username={user!.username} />
       <div className="main-content">
-        <form onSubmit={handleSubmit}>
+        <h1>Створити урок</h1>
+        <form onSubmit={handleSubmit} className="main-form">
           <select
+            className="main-form--subject"
             value={lesson.subject}
             onChange={e => setLesson({...lesson, subject: e.target.value})}
           >
@@ -64,6 +76,7 @@ const CreateLessonPage: React.FC = () => {
             ))}
           </select>
           <select
+            className="main-form--grade"
             value={lesson.grade}
             onChange={e =>
               setLesson({...lesson, grade: Number(e.target.value)})
@@ -76,123 +89,42 @@ const CreateLessonPage: React.FC = () => {
             ))}
           </select>
           <input
+            className="main-form--title"
             type="text"
             value={lesson.title}
             onChange={e => setLesson({...lesson, title: e.target.value})}
             placeholder="Назва теми"
           />
-          {lesson.tasks.map((task, index) => (
+          <button
+            type="button"
+            onClick={addTask}
+            disabled={lesson.tasks.length >= 10}
+            className="main-form--add"
+          >
+            Додати питання
+          </button>
+          <button type="submit" className="main-form--create">
+            Створити урок
+          </button>
+          <button
+            type="button"
+            className="main-form--back"
+            onClick={returnBack}
+          >
+            Назад
+          </button>
+        </form>
+        <div className="task-form">
+          {lesson.tasks.slice(0, 10).map((task, index) => (
             <TaskForm
               key={index}
               task={task}
               updateTask={updatedTask => updateTask(index, updatedTask)}
             />
           ))}
-          <button type="button" onClick={addTask}>
-            Додати питання
-          </button>
-          <button type="submit">Створити урок</button>
-        </form>
+        </div>
       </div>
     </React.Fragment>
-  );
-};
-
-interface TaskFormProps {
-  task: Task;
-  updateTask: (task: Task) => void;
-}
-
-const TaskForm: React.FC<TaskFormProps> = ({task, updateTask}) => {
-  useEffect(() => {
-    if (!task.taskType) {
-      updateTask({...task, taskType: 'SINGLE_ANSWER'});
-    }
-  }, [task, updateTask]);
-
-  const handleQuestionChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    updateTask({...task, question: e.target.value});
-  };
-
-  const handleTaskTypeChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
-    const taskType = e.target.value;
-    if (taskType === 'SINGLE_ANSWER') {
-      const resetVariants = Array(4)
-        .fill(null)
-        .map((_, index) => ({
-          value: '',
-          isRight: index === 0,
-        }));
-      updateTask({
-        ...task,
-        taskType,
-        variants: resetVariants,
-        rightAnswer: undefined,
-      });
-    } else if (taskType === 'OPEN_ANSWER') {
-      updateTask({
-        ...task,
-        taskType,
-        variants: undefined,
-        rightAnswer: '',
-      });
-    }
-  };
-
-  const handleVariantChange = (index: number, variant: Partial<Variant>) => {
-    let updatedVariants = task.variants?.map((v, i) =>
-      i === index ? {...v, ...variant} : v
-    );
-    if (variant.isRight) {
-      updatedVariants = updatedVariants?.map((v, i) => ({
-        ...v,
-        isRight: i === index,
-      }));
-    }
-    updateTask({...task, variants: updatedVariants});
-  };
-
-  return (
-    <div>
-      <input
-        type="text"
-        value={task.question}
-        onChange={handleQuestionChange}
-        placeholder="Питання"
-      />
-      <select value={task.taskType} onChange={handleTaskTypeChange}>
-        <option value="SINGLE_ANSWER">З варіантами</option>
-        <option value="OPEN_ANSWER">Текстова відповідь</option>
-      </select>
-      {task.taskType === 'SINGLE_ANSWER' &&
-        task.variants?.map((variant, index) => (
-          <div key={index}>
-            <input
-              type="text"
-              value={variant.value}
-              onChange={e =>
-                handleVariantChange(index, {value: e.target.value})
-              }
-              placeholder="Варіант"
-            />
-            <input
-              type="checkbox"
-              checked={variant.isRight}
-              onChange={e =>
-                handleVariantChange(index, {isRight: e.target.checked})
-              }
-            />
-          </div>
-        ))}
-      {task.taskType === 'OPEN_ANSWER' && (
-        <input
-          type="text"
-          value={task.rightAnswer || ''}
-          onChange={e => updateTask({...task, rightAnswer: e.target.value})}
-          placeholder="Правильна відповідь"
-        />
-      )}
-    </div>
   );
 };
 

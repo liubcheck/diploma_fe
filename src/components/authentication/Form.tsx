@@ -71,10 +71,11 @@ const Form = ({onSubmit, handleCancel}: Props) => {
       <button type="submit" className="btn btn-outline-dark me-2">
         Зареєструватися
       </button>
+      <h1> </h1>
       <button
         type="button"
         onClick={handleCancel}
-        className="btn btn-outline-dark"
+        className="btn btn-outline-dark main-form--back"
       >
         Назад
       </button>

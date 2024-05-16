@@ -11,6 +11,7 @@ const HomePage = () => {
     <React.Fragment>
       <section className="home-section text-center">
         <Navbar username={user!.username} />
+        <h1 className="login-title">Diploma</h1>
         {user?.role?.name === 'ADMIN' ? (
           <div>
             <Button label="Створити урок" link="/createLesson" />

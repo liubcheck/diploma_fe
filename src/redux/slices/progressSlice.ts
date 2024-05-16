@@ -9,6 +9,7 @@ import {
   fetchBestScore,
   fetchWorstScore,
   fetchTestCountsByDay,
+  fetchAllUsersStats,
 } from '../thunks/progressThunks';
 
 export interface Progress {
@@ -80,6 +81,15 @@ const ProgressSlice = createSlice({
     });
     builder.addCase(fetchTopTenUsersByScore.fulfilled, (state, action) => {
       state.top_10_users = action.payload;
+    });
+    builder.addCase(fetchAllUsersStats.fulfilled, (state, action) => {
+      state.total_score = action.payload.totalScore;
+      state.average_score = action.payload.averageScore;
+      state.average_attempts_number = action.payload.averageAttemptsNumber;
+      state.best_score = action.payload.bestScore;
+      state.worst_score = action.payload.worstScore;
+      state.test_counts_by_day = action.payload.testCountsByDay;
+      state.top_10_users = action.payload.topTenUsersData;
     });
   },
 });

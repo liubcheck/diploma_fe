@@ -1,6 +1,5 @@
 import React from 'react';
 import TextInput from './TextInput';
-import SignInSection from './SignInSection';
 
 interface Props {
   login: string;
@@ -36,7 +35,18 @@ const LoginForm = ({
         value={password}
         onChange={e => setPassword(e.target.value)}
       />
-      <SignInSection error={error} />
+      <div className="d-flex mt-2">
+        {error && (
+          <div id="error">
+            <span className="login-error-message">{error}</span>
+          </div>
+        )}
+        <div className="ms-auto">
+          <button className="btn login-btn btn-outline-dark" type="submit">
+            Увійти
+          </button>
+        </div>
+      </div>
     </form>
   );
 };

@@ -7,13 +7,15 @@ interface Props {
   onClick?: () => void;
 }
 
-const HomeButton = ({label, link, onClick}: Props) => {
+const Button = ({label, link = undefined, onClick}: Props) => {
   const navigate = useNavigate();
+
+  const handeClick = link ? () => navigate(link) : onClick;
 
   return (
     <div>
       <button
-        onClick={link ? () => navigate(link) : onClick}
+        onClick={handeClick}
         className="btn login-btn btn-outline-dark"
         style={{margin: '5px'}}
       >
@@ -23,4 +25,4 @@ const HomeButton = ({label, link, onClick}: Props) => {
   );
 };
 
-export default HomeButton;
+export default Button;

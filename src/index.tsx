@@ -22,7 +22,7 @@ const Index = () => {
       const token = cookie.get('access_token');
       if (token) {
         axios.defaults.headers.common['Authorization'] = `Bearer ${token}`;
-        await store.dispatch(fetchCurrentUser());
+        await store.dispatch(fetchCurrentUser()).then(() => {});
       }
       setInitialLoadComplete(true);
     };

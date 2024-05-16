@@ -12,8 +12,8 @@ const validateField = (
 ): string | null => {
   switch (name) {
     case 'email': {
-      if (!value) return 'Field is required';
-      if (value.length < 1) return 'Min length is 1 character';
+      if (!value) return 'Поле обов`язкове';
+      if (value.length < 1) return 'Мінімальна довжина - 1 символ';
       if (value.length > 50) return 'Max length is 50 characters';
       if (!EMAIL_REGEX.test(value)) return 'Not a well-formed email address';
       break;

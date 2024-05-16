@@ -2,12 +2,17 @@ import React, {useState} from 'react';
 import LoginForm from './LoginForm';
 import RegisterOption from './RegisterOption';
 import {useNavigate} from 'react-router-dom';
-import {useDispatch} from 'react-redux';
+import {useDispatch, useSelector} from 'react-redux';
 import {AppDispatch} from '../../redux/store';
 import {loginUser} from '../../redux/thunks/userThunks';
-import {fetchTopTenUsersByScore} from '../../redux/thunks/progressThunks';
+import {
+  fetchAllUsersStats,
+  fetchTopTenUsersByScore,
+} from '../../redux/thunks/progressThunks';
+import {getLoggedInUser} from '../../redux/selectors/userSelector';
 
 const LoginPage = () => {
+  const user = useSelector(getLoggedInUser);
   const [loginData, setLoginData] = useState<string>('');
   const [password, setPassword] = useState<string>('');
   const [error, setError] = useState<string>('');
@@ -18,7 +23,11 @@ const LoginPage = () => {
     e.preventDefault();
     try {
       await dispatch(loginUser({loginData, password})).then(async () => {
-        await dispatch(fetchTopTenUsersByScore());
+        if (user && user.role.name === 'USER') {
+          await dispatch(fetchAllUsersStats());
+        } else {
+          await dispatch(fetchTopTenUsersByScore());
+        }
       });
       navigate('/');
     } catch (error) {
@@ -40,7 +49,7 @@ const LoginPage = () => {
   return (
     <section className="login-section text-center">
       <div className="signin-container">
-        <h1 className="login-title">Diploma</h1>
+        <h1 className="login-title">Dali</h1>
         <LoginForm
           login={loginData}
           setLogin={setLoginData}

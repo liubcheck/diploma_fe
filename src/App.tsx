@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {useEffect, useState} from 'react';
 import './App.css';
 import {Routes, Route} from 'react-router-dom';
 import Layout from './components/Layout';
@@ -14,8 +14,31 @@ import RegisterPage from './components/authentication/RegisterPage';
 import PracticePage from './components/user/PracticePage';
 import Missing from './components/Missing';
 import StatsPage from './components/user/StatsPage';
+import {useSelector} from 'react-redux';
+import {getLoggedInUser} from './redux/selectors/userSelector';
+import {store} from './redux/store';
+import {fetchAllUsersStats} from './redux/thunks/progressThunks';
+import LoadingPage from './components/LoadingPage';
 
 const App: React.FC = () => {
+  const user = useSelector(getLoggedInUser);
+  const [initialLoadComplete, setInitialLoadComplete] = useState(false);
+
+  useEffect(() => {
+    const init = async () => {
+      if (user && user.role.name === 'USER') {
+        await store.dispatch(fetchAllUsersStats());
+      }
+      setInitialLoadComplete(true);
+    };
+
+    init();
+  }, []);
+
+  if (!initialLoadComplete) {
+    return <LoadingPage />;
+  }
+
   return (
     <Routes>
       <Route path="/" element={<Layout />}>
@@ -33,7 +56,10 @@ const App: React.FC = () => {
           />
           <Route path="/stats" element={<StatsPage />} />
           <Route path="/createLesson" element={<CreateLessonPage />} />
-          <Route path="/editLesson" element={<EditLessonPage />} />
+          <Route
+            path="/:grade/:subject/lessons/:lessonId/edit"
+            element={<EditLessonPage />}
+          />
         </Route>
       </Route>
     </Routes>
